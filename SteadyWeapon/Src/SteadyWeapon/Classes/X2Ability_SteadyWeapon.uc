@@ -49,7 +49,7 @@ static function X2AbilityTemplate AddSteadyWeaponAbility()
 
 	PersistentStatChangeEffect = new class'X2Effect_PersistentStatChange';
 	PersistentStatChangeEffect.EffectName = 'SteadyWeapon';
-	PersistentStatChangeEffect.BuildPersistentEffect(2 /* Turns */,,,,eGameRule_UseActionPoint);  // eGameRule_UseActionPoint, eGameRule_PlayerTurnEnd, eGameRule_PlayerTurnBegin
+	PersistentStatChangeEffect.BuildPersistentEffect(2 /* Turns */,,,,eGameRule_PlayerTurnEnd);  // eGameRule_UseActionPoint, eGameRule_PlayerTurnEnd, eGameRule_PlayerTurnBegin
 	PersistentStatChangeEffect.SetDisplayInfo(ePerkBuff_Bonus, Template.LocFriendlyName, Template.GetMyHelpText(), Template.IconImage);
 	PersistentStatChangeEffect.AddPersistentStatChange(eStat_Offense, default.STEADY_WEAPON_AIM_BONUS); // Give bonus aim
 	PersistentStatChangeEffect.DuplicateResponse = eDupe_Refresh;
