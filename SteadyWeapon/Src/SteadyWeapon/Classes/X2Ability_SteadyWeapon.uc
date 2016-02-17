@@ -20,6 +20,7 @@ static function X2AbilityTemplate AddSteadyWeaponAbility()
 	local X2Condition_UnitProperty PropertyCondition;
 	local X2Effect_PersistentStatChange PersistentStatChangeEffect;
 	local X2AbilityTrigger_PlayerInput InputTrigger;
+	local X2Effect_SteadyWeapon SteadyWeaponEffect;
 
 	`CREATE_X2ABILITY_TEMPLATE(Template, 'SteadyWeapon');
 	Template.IconImage = "img:///UILibrary_PerkIcons.UIPerk_overwatch"; // I can't draw, use overwatch icon for now
@@ -47,13 +48,13 @@ static function X2AbilityTemplate AddSteadyWeaponAbility()
 	InputTrigger = new class'X2AbilityTrigger_PlayerInput'; // Player needs to trigger it
 	Template.AbilityTriggers.AddItem(InputTrigger);
 
-	PersistentStatChangeEffect = new class'X2Effect_PersistentStatChange';
-	PersistentStatChangeEffect.EffectName = 'SteadyWeapon';
-	PersistentStatChangeEffect.BuildPersistentEffect(2 /* Turns */,,,,eGameRule_PlayerTurnEnd);  // eGameRule_UseActionPoint, eGameRule_PlayerTurnEnd, eGameRule_PlayerTurnBegin
-	PersistentStatChangeEffect.SetDisplayInfo(ePerkBuff_Bonus, Template.LocFriendlyName, Template.GetMyHelpText(), Template.IconImage);
-	PersistentStatChangeEffect.AddPersistentStatChange(eStat_Offense, default.STEADY_WEAPON_AIM_BONUS); // Give bonus aim
-	PersistentStatChangeEffect.DuplicateResponse = eDupe_Refresh;
-	Template.AddTargetEffect(PersistentStatChangeEffect);
+	SteadyWeaponEffect = new class'X2Effect_SteadyWeapon';
+	SteadyWeaponEffect.EffectName = 'SteadyWeapon';
+	SteadyWeaponEffect.BuildPersistentEffect(2 /* Turns */,,,,eGameRule_PlayerTurnEnd);  // eGameRule_UseActionPoint, eGameRule_PlayerTurnEnd, eGameRule_PlayerTurnBegin
+	SteadyWeaponEffect.SetDisplayInfo(ePerkBuff_Bonus, Template.LocFriendlyName, Template.GetMyHelpText(), Template.IconImage);
+	SteadyWeaponEffect.AddPersistentStatChange(eStat_Offense, default.STEADY_WEAPON_AIM_BONUS); // Give bonus aim
+	SteadyWeaponEffect.DuplicateResponse = eDupe_Refresh;
+	Template.AddTargetEffect(SteadyWeaponEffect);
 
 
 	return Template;
