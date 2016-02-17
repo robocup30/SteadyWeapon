@@ -22,8 +22,8 @@ static function X2AbilityTemplate AddSteadyWeaponAbility()
 	local X2Effect_SteadyWeapon SteadyWeaponEffect;
 
 	`CREATE_X2ABILITY_TEMPLATE(Template, 'SteadyWeapon');
-	Template.IconImage = "img:///UILibrary_PerkIcons.UIPerk_overwatch"; // I can't draw, use overwatch icon for now
-	Template.ShotHUDPriority = class'UIUtilities_Tactical'.const.OVERWATCH_PRIORITY; // Where ability gets placed on the tactical UI bar
+	Template.IconImage = "img:///UILibrary_PerkIcons.UIPerk_aim"; // I can't draw, use overwatch icon for now
+	Template.ShotHUDPriority = class'UIUtilities_Tactical'.const.STANDARD_SHOT_PRIORITY; // Where ability gets placed on the tactical UI bar
 	Template.bDisplayInUITooltip = false; // I have no idea what this does actually
 
 	Template.AbilitySourceName = 'eAbilitySource_Standard';
