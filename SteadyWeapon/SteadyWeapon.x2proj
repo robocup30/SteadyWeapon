@@ -38,6 +38,9 @@
     <Content Include="Src\SteadyWeapon\Classes\X2Effect_SteadyWeapon.uc">
       <SubType>Content</SubType>
     </Content>
+    <Content Include="Src\SteadyWeapon\Classes\XComGameState_Effect_SteadyWeapon.uc">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="Src\XComGame\Classes\AnimNotify_ApplyPsiEffectsToTarget.uc" />
     <Content Include="Src\XComGame\Classes\AnimNotify_BlendIK.uc" />
     <Content Include="Src\XComGame\Classes\AnimNotify_BreakWindow.uc" />

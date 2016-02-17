@@ -18,7 +18,6 @@ static function X2AbilityTemplate AddSteadyWeaponAbility()
 	local X2AbilityTemplate Template;
 	local X2AbilityCost_ActionPoints ActionPointCost;
 	local X2Condition_UnitProperty PropertyCondition;
-	local X2Effect_PersistentStatChange PersistentStatChangeEffect;
 	local X2AbilityTrigger_PlayerInput InputTrigger;
 	local X2Effect_SteadyWeapon SteadyWeaponEffect;
 
@@ -29,6 +28,8 @@ static function X2AbilityTemplate AddSteadyWeaponAbility()
 
 	Template.AbilitySourceName = 'eAbilitySource_Standard';
 	Template.eAbilityIconBehaviorHUD = eAbilityIconBehavior_ShowIfAvailable;
+	Template.bShowActivation = true; // show fly text
+	Template.bSkipFireAction = true; // no fire animation
 	Template.BuildNewGameStateFn = TypicalAbility_BuildGameState;
 	Template.BuildVisualizationFn = TypicalAbility_BuildVisualization;
 

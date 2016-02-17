@@ -7,12 +7,9 @@ event OnInit(UIScreen Screen)
 	local X2AbilityTemplateManager AbilityTemplateManager;
 	local X2AbilityTemplate AbilityTemplate;
 	local XComGameState_HeadquartersXCom XComHQ;
-	local StateObjectReference RewardUnitRef;
-	local XComGameState_MissionSite Mission;
 	local int i;
 	
 	XComHQ = class'UIUtilities_Strategy'.static.GetXComHQ();
-	Mission = XComGameState_MissionSite(`XCOMHISTORY.GetGameStateForObjectID(XComHQ.MissionRef.ObjectID));
 
 	// Locate the evac all ability template
 	AbilityTemplateManager = class'X2AbilityTemplateManager'.static.GetAbilityTemplateManager();
