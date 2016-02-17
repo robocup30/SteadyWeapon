@@ -29,6 +29,7 @@ simulated protected function OnEffectAdded(const out EffectAppliedData ApplyEffe
 
 	EventMgr.RegisterForEvent(ListenerObj, 'ObjectMoved', SWEffectState.SteadyWeapon_ObjectMoved, ELD_OnStateSubmitted,,UnitState);
 	EventMgr.RegisterForEvent(ListenerObj, 'AbilityActivated', SWEffectState.SteadyWeapon_AbilityActivated, ELD_OnStateSubmitted,,UnitState);
+	super.OnEffectAdded(ApplyEffectParameters, kNewTargetState, NewGameState, NewEffectState);
 
 }
 
