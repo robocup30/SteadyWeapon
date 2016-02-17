@@ -28,10 +28,10 @@ static function X2AbilityTemplate AddSteadyWeaponAbility()
 
 	Template.AbilitySourceName = 'eAbilitySource_Standard';
 	Template.eAbilityIconBehaviorHUD = eAbilityIconBehavior_ShowIfAvailable;
-	Template.bShowActivation = true; // show fly text
-	Template.bSkipFireAction = true; // no fire animation
+	Template.bShowActivation = true;
+	Template.bSkipFireAction = true;
 	Template.BuildNewGameStateFn = TypicalAbility_BuildGameState;
-	Template.BuildVisualizationFn = TypicalAbility_BuildVisualization;
+	Template.BuildVisualizationFn = SteadyWeaponAbility_BuildVisualization;
 
 	ActionPointCost = new class'X2AbilityCost_ActionPoints';
 	ActionPointCost.bConsumeAllPoints = true; // End turn when used
@@ -59,4 +59,44 @@ static function X2AbilityTemplate AddSteadyWeaponAbility()
 
 
 	return Template;
+}
+
+
+simulated function SteadyWeaponAbility_BuildVisualization(XComGameState VisualizeGameState, out array<VisualizationTrack> OutVisualizationTracks)
+{
+	local XComGameStateHistory History;
+	local XComGameStateContext_Ability  Context;
+	local StateObjectReference          InteractingUnitRef;
+	local X2AbilityTemplate             AbilityTemplate;
+	local XComGameState_Unit            UnitState;
+
+	local VisualizationTrack        EmptyTrack;
+	local VisualizationTrack        BuildTrack;
+
+	local X2Action_PlaySoundAndFlyOver SoundAndFlyOver;
+
+	History = `XCOMHISTORY;
+
+	Context = XComGameStateContext_Ability(VisualizeGameState.GetContext());
+	InteractingUnitRef = Context.InputContext.SourceObject;
+
+	//Configure the visualization track for the shooter
+	//****************************************************************************************	
+	BuildTrack = EmptyTrack;
+	BuildTrack.StateObject_OldState = History.GetGameStateForObjectID(InteractingUnitRef.ObjectID, eReturnType_Reference, VisualizeGameState.HistoryIndex - 1);
+	BuildTrack.StateObject_NewState = VisualizeGameState.GetGameStateForObjectID(InteractingUnitRef.ObjectID);
+	BuildTrack.TrackActor = History.GetVisualizer(InteractingUnitRef.ObjectID);
+
+	UnitState = XComGameState_Unit(BuildTrack.StateObject_NewState);
+	
+	//Civilians on the neutral team are not allowed to have sound + flyover for hunker down
+	if( UnitState.GetTeam() != eTeam_Neutral )
+	{
+		
+		SoundAndFlyOver = X2Action_PlaySoundAndFlyOver(class'X2Action_PlaySoundAndFlyOver'.static.AddToVisualizationTrack(BuildTrack, Context));
+		AbilityTemplate = class'X2AbilityTemplateManager'.static.GetAbilityTemplateManager().FindAbilityTemplate(Context.InputContext.AbilityTemplateName);
+		SoundAndFlyOver.SetSoundAndFlyOverParameters(SoundCue'SoundUI.OverWatchCue', AbilityTemplate.LocFlyOverText, '', eColor_Good, AbilityTemplate.IconImage);
+		OutVisualizationTracks.AddItem(BuildTrack);
+	}
+	//****************************************************************************************
 }
