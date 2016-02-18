@@ -30,6 +30,11 @@ function EnsureAbilityOnUnit(StateObjectReference UnitStateRef, X2AbilityTemplat
 	local StateObjectReference StateObjectRef;
 	local XComGameState NewGameState;
 
+	if(UnitStateRef.ObjectID == 0)
+	{
+		return;
+	}
+
 	// Find the current unit state for this unit
 	UnitState = XComGameState_Unit(`XCOMHISTORY.GetGameStateForObjectId(UnitStateRef.ObjectID));
 
