@@ -1,10 +1,5 @@
 class XComGameState_Effect_SteadyWeapon extends XComGameState_BaseObject config(GameData_SteadyWeapon);
 
-function XComGameState_Effect_SteadyWeapon InitComponent()
-{
-	return self;
-}
-
 function XComGameState_Effect GetOwningEffect()
 {
 	return XComGameState_Effect(`XCOMHISTORY.GetGameStateForObjectID(OwningObjectId));
@@ -20,7 +15,7 @@ simulated function EventListenerReturn SteadyWeapon_ObjectMoved(Object EventData
 	RemoveContext = class'XComGameStateContext_EffectRemoved'.static.CreateEffectRemovedContext(EffectState);
 	NewGameState = `XCOMHISTORY.CreateNewGameState(true, RemoveContext);
 	EffectState.RemoveEffect(NewGameState, GameState);
-	SubmitNewGameState(NewGameState);
+	`TacticalRules.SubmitGameState(NewGameState);
 
 	return ELR_NoInterrupt;
 }
@@ -54,24 +49,4 @@ function EventListenerReturn SteadyWeapon_AbilityActivated(Object EventData, Obj
 		}
 	}
 	return ELR_NoInterrupt;
-}
-
-
-private function SubmitNewGameState(out XComGameState NewGameState)
-{
-	local X2TacticalGameRuleset TacticalRules;
-	local XComGameStateHistory History;
-
-	if (NewGameState.GetNumGameStateObjects() > 0)
-	{
-		TacticalRules = `TACTICALRULES;
-		TacticalRules.SubmitGameState(NewGameState);
-
-		//  effects may have changed action availability - if a unit died, took damage, etc.
-	}
-	else
-	{
-		History = `XCOMHISTORY;
-		History.CleanupPendingGameState(NewGameState);
-	}
 }

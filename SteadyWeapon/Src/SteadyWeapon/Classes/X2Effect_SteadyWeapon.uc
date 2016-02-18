@@ -7,13 +7,13 @@ simulated protected function OnEffectAdded(const out EffectAppliedData ApplyEffe
 	local Object ListenerObj;
 	local XComGameState_Unit UnitState;
 
-	EventMgr = `XEVENTMGR;
+	super.OnEffectAdded(ApplyEffectParameters, kNewTargetState, NewGameState, NewEffectState);
 
+	EventMgr = `XEVENTMGR;
 	if (GetSteadyWeaponComponent(NewEffectState) == none)
 	{
 		//create component and attach it to GameState_Effect, adding the new state object to the NewGameState container
 		SWEffectState = XComGameState_Effect_SteadyWeapon(NewGameState.CreateStateObject(class'XComGameState_Effect_SteadyWeapon'));
-		SWEffectState.InitComponent();
 		NewEffectState.AddComponentObject(SWEffectState);
 		NewGameState.AddStateObject(SWEffectState);
 	}
@@ -29,8 +29,6 @@ simulated protected function OnEffectAdded(const out EffectAppliedData ApplyEffe
 
 	EventMgr.RegisterForEvent(ListenerObj, 'ObjectMoved', SWEffectState.SteadyWeapon_ObjectMoved, ELD_OnStateSubmitted,,UnitState);
 	EventMgr.RegisterForEvent(ListenerObj, 'AbilityActivated', SWEffectState.SteadyWeapon_AbilityActivated, ELD_OnStateSubmitted,,UnitState);
-	super.OnEffectAdded(ApplyEffectParameters, kNewTargetState, NewGameState, NewEffectState);
-
 }
 
 simulated function OnEffectRemoved(const out EffectAppliedData ApplyEffectParameters, XComGameState NewGameState, bool bCleansed, XComGameState_Effect RemovedEffectState)
