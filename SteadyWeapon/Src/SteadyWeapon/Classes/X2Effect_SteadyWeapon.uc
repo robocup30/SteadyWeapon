@@ -36,12 +36,12 @@ simulated function OnEffectRemoved(const out EffectAppliedData ApplyEffectParame
 	local X2EventManager EventMgr;
 	local Object ListenerObj;
 
-	super.OnEffectRemoved(ApplyEffectParameters, NewGameState, bCleansed, RemovedEffectState);
-
 	ListenerObj = GetSteadyWeaponComponent(RemovedEffectState);
 	EventMgr = `XEVENTMGR;
 	EventMgr.UnRegisterFromEvent(ListenerObj, 'ObjectMoved');
 	EventMgr.UnRegisterFromEvent(ListenerObj, 'AbilityActivated');
+
+	super.OnEffectRemoved(ApplyEffectParameters, NewGameState, bCleansed, RemovedEffectState);
 }
 
 static function XComGameState_Effect_SteadyWeapon GetSteadyWeaponComponent(XComGameState_Effect Effect)
