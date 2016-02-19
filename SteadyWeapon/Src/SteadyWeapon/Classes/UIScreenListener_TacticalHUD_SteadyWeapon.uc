@@ -1,6 +1,6 @@
 class UIScreenListener_TacticalHUD_SteadyWeapon extends UIScreenListener;
 
-// Workaround to add the evac all ability to each xcom unit. Loop over all units on tactical UI load and
+// Workaround to add the SteadyWeapon all ability to each xcom unit. Loop over all units on tactical UI load and
 // add the ability to each one that doesn't already have it.
 event OnInit(UIScreen Screen)
 {
@@ -11,7 +11,7 @@ event OnInit(UIScreen Screen)
 	
 	XComHQ = class'UIUtilities_Strategy'.static.GetXComHQ();
 
-	// Locate the evac all ability template
+	// Locate the SteadyWeapon ability template
 	AbilityTemplateManager = class'X2AbilityTemplateManager'.static.GetAbilityTemplateManager();
 	AbilityTemplate = AbilityTemplateManager.FindAbilityTemplate('SteadyWeapon');
 
@@ -22,7 +22,7 @@ event OnInit(UIScreen Screen)
 	}
 }
 
-// Ensure the unit represented by the given reference has the EvacAll ability
+// Ensure the unit represented by the given reference has the SteadyWeapon ability
 function EnsureAbilityOnUnit(StateObjectReference UnitStateRef, X2AbilityTemplate AbilityTemplate)
 {
 	local XComGameState_Unit UnitState, NewUnitState;
