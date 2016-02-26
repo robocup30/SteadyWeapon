@@ -3,6 +3,7 @@ class X2Ability_SteadyWeapon extends X2Ability config(GameData_SteadyWeapon); //
 
 // Out config variables that we will pull rom the config file
 var config int STEADY_WEAPON_AIM_BONUS; // Get aim bonus amount from config file
+var config int STEADY_WEAPON_DEFENSE_BONUS; // Get aim bonus amount from config file
 
 static function array<X2DataTemplate> CreateTemplates()
 {
@@ -54,6 +55,7 @@ static function X2AbilityTemplate AddSteadyWeaponAbility()
 	SteadyWeaponEffect.BuildPersistentEffect(2 /* Turns */,,,,eGameRule_PlayerTurnEnd);  // eGameRule_UseActionPoint, eGameRule_PlayerTurnEnd, eGameRule_PlayerTurnBegin
 	SteadyWeaponEffect.SetDisplayInfo(ePerkBuff_Bonus, Template.LocFriendlyName, Template.GetMyHelpText(), Template.IconImage);
 	SteadyWeaponEffect.AddPersistentStatChange(eStat_Offense, default.STEADY_WEAPON_AIM_BONUS); // Give bonus aim
+	SteadyWeaponEffect.AddPersistentStatChange(eStat_Defense, default.STEADY_WEAPON_DEFENSE_BONUS); // Give bonus defense
 	SteadyWeaponEffect.DuplicateResponse = eDupe_Refresh;
 	Template.AddTargetEffect(SteadyWeaponEffect);
 

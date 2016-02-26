@@ -1,4 +1,6 @@
-class UIScreenListener_TacticalHUD_SteadyWeapon extends UIScreenListener;
+class UIScreenListener_TacticalHUD_SteadyWeapon extends UIScreenListener config(GameData_SteadyWeapon);
+
+var config array<name> STEADY_WEAPON_DISABLED_ARRAY;
 
 // Workaround to add the SteadyWeapon all ability to each xcom unit. Loop over all units on tactical UI load and
 // add the ability to each one that doesn't already have it.
@@ -29,6 +31,9 @@ function EnsureAbilityOnUnit(StateObjectReference UnitStateRef, X2AbilityTemplat
 	local XComGameState_Ability AbilityState;
 	local StateObjectReference StateObjectRef;
 	local XComGameState NewGameState;
+	local XComGameState_Item PrimaryWeapon;
+	local name WeaponCategory;
+	local int i;
 
 	if(UnitStateRef.ObjectID == 0)
 	{
@@ -37,6 +42,25 @@ function EnsureAbilityOnUnit(StateObjectReference UnitStateRef, X2AbilityTemplat
 
 	// Find the current unit state for this unit
 	UnitState = XComGameState_Unit(`XCOMHISTORY.GetGameStateForObjectId(UnitStateRef.ObjectID));
+
+	PrimaryWeapon = UnitState.GetPrimaryWeapon();
+
+	if(PrimaryWeapon == none)
+	{
+		return;
+	}
+
+	if(STEADY_WEAPON_DISABLED_ARRAY.Length > 0)
+	{
+		WeaponCategory = PrimaryWeapon.GetWeaponCategory();
+		for(i = 0; i < STEADY_WEAPON_DISABLED_ARRAY.Length; ++i)
+		{
+			if(WeaponCategory == STEADY_WEAPON_DISABLED_ARRAY[i])
+			{
+				return;
+			}
+		}
+	}
 
 	// Loop over all the abilities they have
 	foreach UnitState.Abilities(StateObjectRef) 
