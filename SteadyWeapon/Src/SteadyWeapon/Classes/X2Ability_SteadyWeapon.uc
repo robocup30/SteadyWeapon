@@ -4,6 +4,7 @@ class X2Ability_SteadyWeapon extends X2Ability config(GameData_SteadyWeapon); //
 // Out config variables that we will pull rom the config file
 var config int STEADY_WEAPON_AIM_BONUS; // Get aim bonus amount from config file
 var config int STEADY_WEAPON_DEFENSE_BONUS; // Get aim bonus amount from config file
+var config int STEADY_WEAPON_UI_PRIORITY; // UI placement
 
 static function array<X2DataTemplate> CreateTemplates()
 {
@@ -24,7 +25,7 @@ static function X2AbilityTemplate AddSteadyWeaponAbility()
 
 	`CREATE_X2ABILITY_TEMPLATE(Template, 'SteadyWeapon');
 	Template.IconImage = "img:///UILibrary_PerkIcons.UIPerk_aim"; // I can't draw, use overwatch icon for now
-	Template.ShotHUDPriority = class'UIUtilities_Tactical'.const.STANDARD_SHOT_PRIORITY; // Where ability gets placed on the tactical UI bar
+	Template.ShotHUDPriority = default.STEADY_WEAPON_UI_PRIORITY; // Where ability gets placed on the tactical UI bar
 	Template.bDisplayInUITooltip = false; // I have no idea what this does actually
 
 	Template.AbilitySourceName = 'eAbilitySource_Standard';
