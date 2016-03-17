@@ -24,7 +24,6 @@ function EventListenerReturn SteadyWeapon_AbilityActivated(Object EventData, Obj
 {
 	local XComGameStateContext_Ability AbilityContext;
 	local X2AbilityTemplate AbilityTemplate;
-	local XComGameState_Ability AbilityState;
 
 	AbilityContext = XComGameStateContext_Ability(GameState.GetContext());
 	if (AbilityContext != None)
@@ -34,17 +33,7 @@ function EventListenerReturn SteadyWeapon_AbilityActivated(Object EventData, Obj
 		{
 			if (AbilityTemplate.Hostility == eHostility_Offensive)
 			{
-				AbilityState = XComGameState_Ability(GameState.GetGameStateForObjectID(AbilityContext.InputContext.AbilityRef.ObjectID));
-				if (AbilityState == None)
-					AbilityState = XComGameState_Ability(`XCOMHISTORY.GetGameStateForObjectID(AbilityContext.InputContext.AbilityRef.ObjectID));
-
-				if (AbilityState != None)
-				{
-					if (AbilityState.IsAbilityInputTriggered())
-					{
-						SteadyWeapon_ObjectMoved(EventData, EventSource, GameState, EventID);
-					}
-				}
+				SteadyWeapon_ObjectMoved(EventData, EventSource, GameState, EventID);
 			}
 		}
 	}

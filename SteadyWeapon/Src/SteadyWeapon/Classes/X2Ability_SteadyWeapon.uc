@@ -5,6 +5,8 @@ class X2Ability_SteadyWeapon extends X2Ability config(GameData_SteadyWeapon); //
 var config int STEADY_WEAPON_AIM_BONUS; // Get aim bonus amount from config file
 var config int STEADY_WEAPON_DEFENSE_BONUS; // Get aim bonus amount from config file
 var config int STEADY_WEAPON_UI_PRIORITY; // UI placement
+var config int STEADY_WEAPON_DURATION; // Buff duration
+var config bool STEADY_WEAPON_TICK_AT_END; // When to tick
 
 static function array<X2DataTemplate> CreateTemplates()
 {
@@ -53,7 +55,14 @@ static function X2AbilityTemplate AddSteadyWeaponAbility()
 
 	SteadyWeaponEffect = new class'X2Effect_SteadyWeapon';
 	SteadyWeaponEffect.EffectName = 'SteadyWeapon';
-	SteadyWeaponEffect.BuildPersistentEffect(2 /* Turns */,,,,eGameRule_PlayerTurnEnd);  // eGameRule_UseActionPoint, eGameRule_PlayerTurnEnd, eGameRule_PlayerTurnBegin
+	if(default.STEADY_WEAPON_TICK_AT_END == false)
+	{
+		SteadyWeaponEffect.BuildPersistentEffect(default.STEADY_WEAPON_DURATION /* Turns */,,,,eGameRule_PlayerTurnBegin);  // eGameRule_UseActionPoint, eGameRule_PlayerTurnEnd, eGameRule_PlayerTurnBegin
+	}
+	else
+	{
+		SteadyWeaponEffect.BuildPersistentEffect(default.STEADY_WEAPON_DURATION /* Turns */,,,,eGameRule_PlayerTurnEnd);  // eGameRule_UseActionPoint, eGameRule_PlayerTurnEnd, eGameRule_PlayerTurnBegin
+	}
 	SteadyWeaponEffect.SetDisplayInfo(ePerkBuff_Bonus, Template.LocFriendlyName, Template.GetMyHelpText(), Template.IconImage);
 	SteadyWeaponEffect.AddPersistentStatChange(eStat_Offense, default.STEADY_WEAPON_AIM_BONUS); // Give bonus aim
 	SteadyWeaponEffect.AddPersistentStatChange(eStat_Defense, default.STEADY_WEAPON_DEFENSE_BONUS); // Give bonus defense
